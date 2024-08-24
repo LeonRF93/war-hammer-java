@@ -34,6 +34,9 @@ public class Partida implements Screen{
 	
 	@Override
 	public void show() {
+		
+		System.out.println("onichan");
+		
 		Gdx.input.setInputProcessor(entradas);
 		
 		fondo = new Imagen("img/background/fondo.png", Render.ANCHO, Render.ALTO);
