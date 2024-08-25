@@ -14,4 +14,12 @@ public class Mapa {
 		this.fondo.dibujar();
 	}
 	
+	public int getAncho() {
+		return fondo.ancho;
+	}
+	
+	public int getAlto() {
+		return fondo.alto;
+	}
+	
 }

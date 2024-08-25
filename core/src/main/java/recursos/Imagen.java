@@ -8,12 +8,15 @@ public class Imagen {
 	private Texture t;
 	public Sprite s;
 	public int x=0, y=0;
+	public int ancho, alto;
 	
 	public Imagen(String ruta, int ancho, int alto) {
 		t = new Texture(ruta);
 		s = new Sprite(t);
 		s.setPosition(x, y);
-		s.setSize(ancho, alto);
+		this.ancho = ancho;
+		this.alto = alto;
+		s.setSize(this.ancho, this.alto);
 	}
 	
 	public void dibujar() {

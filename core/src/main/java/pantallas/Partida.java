@@ -2,13 +2,16 @@ package pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import kronk.lol.wh.PrincipalWh;
 import mapas.Mapa;
 import recursos.Entradas;
+import recursos.Globales;
 import recursos.Imagen;
 import recursos.Render;
+import recursos.Texto;
 import tropas.Momo;
 import tropas.Tropa;
 
@@ -20,12 +23,14 @@ public class Partida implements Screen{
 	// Objetos
 	private Tropa momo;
 	private Mapa mapa;
+	private Texto texto;
 	
 	// Img
 	private Imagen fondo;
 	
 	// Camara
-	private OrthographicCamera camara;
+	private OrthographicCamera camaraHud;
+	public static float zoom = 1f;
 	
 	// Input
 	private Entradas entradas = new Entradas(this);
@@ -43,40 +48,60 @@ public class Partida implements Screen{
 		fondo = new Imagen("img/background/fondo.png", Render.ANCHO * 2, Render.ALTO * 2);
 		mapa = new Mapa(fondo);
 		
-		camara = new OrthographicCamera(Render.ANCHO, Render.ALTO);
-		camara.position.set(Render.ANCHO / 2, Render.ALTO / 2, 0);
+		Globales.camara = new OrthographicCamera(Render.ANCHO , Render.ALTO);
+		Globales.camara.position.set(Render.ANCHO / 2 , Render.ALTO/ 2 , 0);
+		zoomear();
+		zoom = Globales.camara.zoom;
 		
-		camara.zoom = 1.5f;
+		camaraHud = new OrthographicCamera(Render.ANCHO, Render.ALTO);
+		camaraHud.position.set(Render.ANCHO / 2, Render.ALTO / 2, 0);
 		
 		momo = new Momo();
+		
+		texto = new Texto("fonts/Minecraft.ttf", 20, Color.WHITE, false);
+		texto.x = 20;
+		texto.y = 20;
 		
 	}
 
 	@Override
 	public void render(float delta) {
 		
-		camara.update();
-		Render.batch.setProjectionMatrix(camara.combined);
+		Render.limpiarPantalla(0, 0, 0, 1);
+		
+		Globales.camara.update();
+		Globales.camara.position.set(momo.getX(), momo.getY(), 0f);
+		Render.batch.setProjectionMatrix(Globales.camara.combined);
 		Render.batch.begin();
 		
-		momo.mover();
+		momo.mover(mapa.getAncho(), mapa.getAlto());
 		mapa.dibujar();
 		momo.dibujar();
 		
+		System.out.println("Ancho de tropa"+momo.getAncho());
+		
 		Render.batch.end();
+		
+		//Hud
+//		camaraHud.update();
+//		Render.batch.setProjectionMatrix(camaraHud.combined);
+//		Render.batch.begin();
+//
+//		mostraCoordenadas(Entradas.getMouseX(), Entradas.getMouseY());
+//		
+//		Render.batch.end();
 		
 	}
 
-    public void zoomIn() {
-        if (camara.zoom > 0.1f) { // Limitar el zoom mínimo
-            camara.zoom -= 0.02f; // Ajusta la velocidad de zoom según necesites
-        }
-    }
+	public void mostraCoordenadas(int x, int y) {
+		texto.texto = ("X:"+ x+" Y: "+y);
+		texto.dibujar();
+	}
+	
+	public void zoomear() {
+		Globales.camara.zoom = 1.5f;
+	}
 
-    // Función para alejar la cámara (hacer zoom out)
-    public void zoomOut() {
-        camara.zoom += 0.02f; // Ajusta la velocidad de zoom según necesites
-    }
 	
 	@Override
 	public void resize(int width, int height) {

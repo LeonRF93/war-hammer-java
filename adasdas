@@ -1,0 +1,29 @@
+[33mcommit 0bfa4d3dbf50680b22283bc390efa6b4dce8d461[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mtrabajo[m[33m)[m
+Author: Leon <leon.rf93@gmail.com>
+Date:   Sun Aug 25 14:46:28 2024 -0300
+
+    Empezando a trabajar con la camara
+
+[33mcommit 9c89ec5bb4d9f6431965d6b0e6af6d73ed2cc227[m
+Author: Leon <leon.rf93@gmail.com>
+Date:   Sat Aug 24 20:52:00 2024 -0300
+
+    agregando a momo
+
+[33mcommit 8c251d0121f6310cd1219496d21432cea28a37fe[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Leon <leon.rf93@gmail.com>
+Date:   Sat Aug 24 18:44:13 2024 -0300
+
+    Removido el print en el metodo show de la clase Partida que decia onichan
+
+[33mcommit 20285fa483c869c95f89f928bc9a2e5c595989a6[m
+Author: Leon <leon.rf93@gmail.com>
+Date:   Sat Aug 24 18:16:07 2024 -0300
+
+    prueba (En el metodo show de la clase partida, hay un print que dice onichan
+
+[33mcommit 7e6e5c13a97aae9198f9b48d0bf9e32bf8c86ceb[m
+Author: Leon <leon.rf93@gmail.com>
+Date:   Sat Aug 24 18:11:54 2024 -0300
+
+    Commit inicial

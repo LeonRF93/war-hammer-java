@@ -1,6 +1,8 @@
 package tropas;
 
+import pantallas.Partida;
 import recursos.Entradas;
+import recursos.Globales;
 import recursos.Imagen;
 import recursos.Render;
 
@@ -22,7 +24,7 @@ public class Tropa {
 
     private float velocidad = 500f; // Velocidad en píxeles por segundo
     private float distanciaMaximaPorMovimiento = 200f; // Distancia máxima por movimiento
-    private float distanciaTotal = 5000f; // Distancia total que la tropa puede recorrer
+    private float distanciaTotal = 50000f; // Distancia total que la tropa puede recorrer
 
     private float dx = 0;
     private float dy = 0;
@@ -39,11 +41,33 @@ public class Tropa {
 
     public void dibujar() {
         imagen.dibujar();
+        System.out.println("X: "+x+"Y: "+y);
     }
 
-    public void mover() {
+    public void mover(int mapaAncho, int mapaAlto) {
+    	
+    	// evitar q la tropa se vaya fuera del mapa
+    	if(x < 0 || y < 0 || x > mapaAncho || y > mapaAlto) {
+    		enMovimineto = false;
+    	}
+    	
+    	if(x < 0) {
+    		x  = 0;
+    	}
+    	if(y < 0) {
+    		y = 0;
+    	}
+    	
+    	if(x > mapaAncho) {
+    		x = mapaAncho;
+    	}
+    	if(y > mapaAlto) {
+    		y = mapaAlto;
+    	}
 
-        if (Entradas.getBotonMouse() == 0) {
+    	// Hacer click
+        if (Entradas.getBotonMouse() == 0 && (x >= 0 || x >= mapaAncho  && y <= 0 || y <= mapaAlto)) {
+        	
         	
             // Verificar si aún hay distancia total disponible para moverse
             if (distanciaTotal <= 0) {
@@ -52,9 +76,10 @@ public class Tropa {
             }
         	
             if (!unaVezMovimiento) {
-            	
-                xMouse = Entradas.getMouseX();
-                yMouse = Entradas.getMouseY();
+
+                // Ajustar las coordenadas del mouse según la posición de la cámara
+            	xMouse = Entradas.getMouseX() + (int) (Globales.camara.position.x - Globales.camara.viewportWidth / 2);
+            	yMouse = Entradas.getMouseY() + (int) (Globales.camara.position.y - Globales.camara.viewportHeight / 2);
 
                 // Calcular la dirección del movimiento
                 dx = xMouse - x;
@@ -135,6 +160,18 @@ public class Tropa {
         
     }
 
+    public int getAncho() {
+    	return imagen.ancho;
+    }
+    
+    public float getX() {
+		return x;
+	}
+    
+    public float getY() {
+		return y;
+	}
+    
     public void dispose() {
         imagen.dispose();
     }
