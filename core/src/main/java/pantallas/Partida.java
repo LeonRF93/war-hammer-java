@@ -5,9 +5,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import kronk.lol.wh.PrincipalWh;
+import mapas.Mapa;
 import recursos.Entradas;
 import recursos.Imagen;
 import recursos.Render;
+import tropas.Momo;
 import tropas.Tropa;
 
 public class Partida implements Screen{
@@ -15,8 +17,9 @@ public class Partida implements Screen{
 	private PrincipalWh principal;
 	private ScreenManager screenMg;
 	
-	private Tropa bana;
-	private Imagen banaimg;
+	// Objetos
+	private Tropa momo;
+	private Mapa mapa;
 	
 	// Img
 	private Imagen fondo;
@@ -37,13 +40,15 @@ public class Partida implements Screen{
 		
 		Gdx.input.setInputProcessor(entradas);
 		
-		fondo = new Imagen("img/background/fondo.png", Render.ANCHO, Render.ALTO);
+		fondo = new Imagen("img/background/fondo.png", Render.ANCHO * 2, Render.ALTO * 2);
+		mapa = new Mapa(fondo);
 		
 		camara = new OrthographicCamera(Render.ANCHO, Render.ALTO);
 		camara.position.set(Render.ANCHO / 2, Render.ALTO / 2, 0);
 		
-		banaimg = new Imagen("img/pjs/ban.jpg", Render.ANCHO, Render.ALTO);
-		bana = new Tropa(banaimg, 3, 3);
+		camara.zoom = 1.5f;
+		
+		momo = new Momo();
 		
 	}
 
@@ -54,14 +59,25 @@ public class Partida implements Screen{
 		Render.batch.setProjectionMatrix(camara.combined);
 		Render.batch.begin();
 		
-		bana.mover();
-		fondo.dibujar();
-		bana.dibujar();
+		momo.mover();
+		mapa.dibujar();
+		momo.dibujar();
 		
 		Render.batch.end();
 		
 	}
 
+    public void zoomIn() {
+        if (camara.zoom > 0.1f) { // Limitar el zoom mínimo
+            camara.zoom -= 0.02f; // Ajusta la velocidad de zoom según necesites
+        }
+    }
+
+    // Función para alejar la cámara (hacer zoom out)
+    public void zoomOut() {
+        camara.zoom += 0.02f; // Ajusta la velocidad de zoom según necesites
+    }
+	
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
@@ -89,7 +105,7 @@ public class Partida implements Screen{
 	@Override
 	public void dispose() {
 		fondo.dispose();
-		bana.dispose();
+		momo.dispose();
 		
 	}
 

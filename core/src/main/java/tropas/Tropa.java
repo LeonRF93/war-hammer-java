@@ -22,7 +22,7 @@ public class Tropa {
 
     private float velocidad = 500f; // Velocidad en píxeles por segundo
     private float distanciaMaximaPorMovimiento = 200f; // Distancia máxima por movimiento
-    private float distanciaTotal = 500f; // Distancia total que la tropa puede recorrer
+    private float distanciaTotal = 5000f; // Distancia total que la tropa puede recorrer
 
     private float dx = 0;
     private float dy = 0;
